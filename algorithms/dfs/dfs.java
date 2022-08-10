@@ -20,20 +20,28 @@ public class dfs {
 
     public static int[] solve(int src, ArrayList<ArrayList<Integer>> adjList) {
         int[] visited = new int[adjList.size()];
-        int[] parents = new int[adjList.size()];
-        Arrays.fill(parents, -1);
-        dfsUtil(src, adjList, visited, parents);
-        return parents;
+        int[] in = new int[adjList.size()];
+        int[] out = new int[adjList.size()];
+        int time = 0;
+        for (int i = 0; i < adjList.size(); i++) {
+            if (visited[i] == 0) {
+                time = dfsUtil(adjList, src, visited, in, out, time);
+            }
+        }
+        return in;
     }
 
-    public static void dfsUtil(int src, ArrayList<ArrayList<Integer>> adjList, int[] visited, int[] parents) {
+    public static int dfsUtil(ArrayList<ArrayList<Integer>> adjList, int src, int[] visited, int[] in, int[] out,
+            int time) {
+        in[src] = ++time;
         for (int i = 0; i < adjList.get(src).size(); i++) {
             int next = adjList.get(src).get(i);
             if (visited[next] == 0) {
                 visited[next] = 1;
-                parents[next] = src;
-                dfsUtil(next, adjList, visited, parents);
+                time = dfsUtil(adjList, next, visited, in, out, time);
             }
         }
+        out[src] = ++time;
+        return time;
     }
 }
