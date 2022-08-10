@@ -54,6 +54,7 @@ public class topoSort {
     public static int[] topoSortDfs(ArrayList<ArrayList<Integer>> adjList) {
         int[] visited = new int[adjList.size()];
         Stack<Integer> soln = new Stack<>();
+        visited[0] = 1;
         topoSortDfsUtil(adjList, soln, 0, visited);
         int[] ans = new int[adjList.size()];
         int ansIdx = 0;
